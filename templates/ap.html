@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Form</title>
+</head>
+<style>
+    body{
+        background-color: black;
+
+    }
+    h1{
+        color: chartreuse;
+    }
+
+    p{
+        color: aliceblue;
+    }
+    
+    .first{
+        color: chartreuse;
+    }
+    .zero{
+        color: chartreuse;
+    }
+
+</style>
+<body>
+    <div class="zero">
+        <h2>{{ today }} is the last day</h2>
+    </div>
+    
+
+    <div class="first">
+        <form action="/submit" method="post">
+            <label for="Name">Name</label>
+            <input type="text" name="name" id="name" placeholder="Enter Name">
+
+            <br>
+             <label for="City">City</label>
+            <input type="text" name="city" id="city" placeholder="Enter City">
+
+            <br>
+            <input type="submit" value="submit">
+
+
+            
+        </form>
+
+        <a href="http://127.0.0.1:5000/view"><button>Show Data</button></a>
+
+
+    </div>
+
+    
+</body>
+</html>
