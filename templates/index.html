@@ -1,40 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a">
+  <title>Welcome to DEVOPS 101</title>
 
-<style>
+  <!-- Google Fonts (fast + great readability) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-start:#0f172a;   /* slate-900 */
+      --bg-end:#111827;     /* gray-900  */
+      --card:#0b1220;
+      --text:#e5e7eb;       /* gray-200  */
+      --muted:#94a3b8;      /* slate-400 */
+      --brand:#22d3ee;      /* cyan-400  */
+      --brand-2:#a78bfa;    /* violet-400*/
+      --ok:#34d399;         /* emerald   */
+      --warn:#f59e0b;       /* amber     */
+      --danger:#f43f5e;     /* rose      */
+      --ring: rgba(34,211,238,.35);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+
+    /* Reset-ish */
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-        background-color: black;
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(167,139,250,.25), transparent 60%),
+        radial-gradient(900px 500px at -10% 20%, rgba(34,211,238,.20), transparent 60%),
+        linear-gradient(180deg, var(--bg-start), var(--bg-end));
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
-    .first{
-        color: yellow;
-    }
-</style>
 
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:20px clamp(16px, 4vw, 28px);
+    }
+
+    header.nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .logo{
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none; color:var(--text);
+    }
+    .logo-mark{
+      width:36px; height:36px; border-radius:10px;
+      background: conic-gradient(from 180deg, var(--brand), var(--brand-2), var(--brand));
+      box-shadow: 0 6px 16px rgba(167,139,250,.35);
+    }
+    .logo-title{
+      font-weight:800; letter-spacing:.2px; font-size:1.05rem;
+    }
+
+    .chip{
+      padding:6px 10px; border-radius:999px;
+      background: rgba(34,211,238,.12);
+      color: var(--brand);
+      border:1px solid rgba(34,211,238,.25);
+      font-size:.8rem; font-weight:600;
+    }
+
+    .hero{
+      text-align:center;
+      padding: clamp(28px, 8vw, 80px) 0 24px;
+    }
+    .title{
+      font-size: clamp(1.8rem, 4.8vw, 3rem);
+      line-height:1.1; margin:14px auto 10px;
+      font-weight:800;
+      letter-spacing:.2px;
+      max-width:20ch;
+      background: linear-gradient(90deg, #fff, #d1d5db 60%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .subtitle{
+      color:var(--muted);
+      font-size: clamp(0.98rem, 2.4vw, 1.1rem);
+      max-width:62ch; margin:0 auto 22px;
+    }
+    .cta{
+      display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:18px;
+    }
+    .btn{
+      appearance:none; border:none; cursor:pointer;
+      padding:12px 18px; border-radius:12px; font-weight:700;
+      color:#0b1220; background:linear-gradient(90deg, var(--brand), var(--brand-2));
+      box-shadow: 0 10px 20px rgba(34,211,238,.25);
+      transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.secondary{
+      background:transparent; color:var(--text);
+      border:1px solid rgba(148,163,184,.25);
+      box-shadow: none;
+    }
+    .btn.secondary:hover{ background:rgba(148,163,184,.08); }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(1, minmax(0,1fr));
+      gap:16px;
+      margin: 26px 0 8px;
+    }
+    @media (min-width: 640px){ .cards{ grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 960px){ .cards{ grid-template-columns: repeat(4, 1fr); } }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border:1px solid rgba(148,163,184,.18);
+      border-radius: var(--radius);
+      padding:16px;
+      min-height:130px;
+      box-shadow: var(--shadow);
+      position:relative; overflow:hidden;
+      transition: transform .15s ease, border-color .2s ease, background .3s ease;
+      backdrop-filter: blur(6px);
+    }
+    .card:hover{ transform: translateY(-2px); border-color: rgba(167,139,250,.45); }
+
+    .ic{
+      width:34px; height:34px; border-radius:8px; display:grid; place-items:center;
+      background: rgba(167,139,250,.15);
+      border:1px solid rgba(167,139,250,.35);
+      color:#e9d5ff; font-weight:800; font-size:0.9rem;
+      margin-bottom:10px;
+    }
+    .card h3{ margin:6px 0 6px; font-size:1.02rem }
+    .card p{ margin:0; color:var(--muted); font-size:.93rem; line-height:1.35 }
+
+    .section{
+      margin-top: 28px;
+      padding: 18px;
+      border-radius: var(--radius);
+      border:1px dashed rgba(148,163,184,.25);
+      background: rgba(2,6,23,.35);
+    }
+    .section h4{
+      margin: 0 0 10px;
+      font-size:1.05rem
+    }
+    .badges{ display:flex; flex-wrap:wrap; gap:8px }
+    .badge{
+      padding:6px 10px; border-radius:999px; font-weight:700; font-size:.78rem;
+      border:1px solid rgba(148,163,184,.25);
+      color:#dbeafe; background: rgba(59,130,246,.15);
+    }
+    .badge.ok{ color:#ecfdf5; background:rgba(16,185,129,.18); border-color: rgba(16,185,129,.35); }
+    .badge.warn{ color:#fffbeb; background:rgba(245,158,11,.18); border-color: rgba(245,158,11,.4); }
+    .badge.danger{ color:#fff1f2; background:rgba(244,63,94,.18); border-color: rgba(244,63,94,.45); }
+
+    footer{
+      text-align:center; color:var(--muted);
+      padding: 26px 10px 34px;
+      font-size:.9rem;
+    }
+
+    /* Small entrance animation */
+    .fade-in{ opacity:0; transform: translateY(10px); animation: up .6s ease forwards; }
+    .fade-2{ animation-delay: .1s }
+    .fade-3{ animation-delay: .18s }
+    .fade-4{ animation-delay: .26s }
+    @keyframes up{ to{ opacity:1; transform: translateY(0) } }
+
+    /* Safe area for notched phones */
+    .container{ padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+  </style>
+</head>
 <body>
-<div class="first">
-    <h1>Enter your informationa & Submit</h1>
-    <form action="/submit" method="post">
+  <div class="container">
+    <header class="nav">
+      <a class="logo" href="#">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <div class="logo-title">DEVOPS 101</div>
+      </a>
+      <span class="chip">Welcome 👋</span>
+    </header>
 
-        <label for="Name">Name</label>
-        <input type="text" name="Name" id="Name" placeholder="Enter Name">
+    <main class="hero">
+      <h1 class="title fade-in">Welcome to <span style="white-space:nowrap">DEVOPS 101</span></h1>
+      <p class="subtitle fade-in fade-2">
+        Learn the foundations of modern DevOps—CI/CD, containers, IaC, observability, and cloud-first practices—
+        presented in a clean, mobile‑friendly layout.
+      </p>
+      <div class="cta fade-in fade-3">
+        <a class="btn" href="#get-started">Get Started</a>
+        <a class="btn secondary" href="#topics">Explore Topics</a>
+      </div>
 
-        <label for="age">Age</label>
-        <input type="text" name="Age" id="Age" placeholder="Enter Age">
+      <section id="topics" class="cards fade-in fade-4" aria-label="Core topics">
+        <article class="card">
+          <div class="ic">CI</div>
+          <h3>CI/CD Pipelines</h3>
+          <p>Automate build, test, and deploy using GitHub Actions, Jenkins, or GitLab CI.</p>
+        </article>
 
-        <br>
+        <article class="card">
+          <div class="ic">DX</div>
+          <h3>Containers</h3>
+          <p>Package once, run anywhere with Docker and orchestrate reliably with Kubernetes.</p>
+        </article>
 
-        <input type="submit" value="Submit">
+        <article class="card">
+          <div class="ic">IaC</div>
+          <h3>Infrastructure as Code</h3>
+          <p>Provision reproducible infra using Terraform and AWS CloudFormation.</p>
+        </article>
 
+        <article class="card">
+          <div class="ic">OBS</div>
+          <h3>Observability</h3>
+          <p>Metrics, logs, and traces to monitor, alert, and improve reliability.</p>
+        </article>
+      </section>
 
-    </form>
+      <section id="get-started" class="section fade-in fade-4">
+        <h4>Quick Start Checklist</h4>
+        <div class="badges" role="list">
+          <span class="badge ok" role="listitem">Git initialized</span>
+          <span class="badge ok" role="listitem">CI workflow</span>
+          <span class="badge warn" role="listitem">Secrets audit</span>
+          <span class="badge ok" role="listitem">Container build</span>
+          <span class="badge ok" role="listitem">IaC plan</span>
+          <span class="badge danger" role="listitem">No manual prod edits</span>
+        </div>
+      </section>
+    </main>
 
+    <footer>
+      © <span id="y"></span> DEVOPS 101 · Built with ❤️ for fast, mobile‑first learning.
+    </footer>
+  </div>
 
-</div>
-    
+  <script>
+    // Set year and prefer-reduced-motion accessible behavior
+    document.getElementById('y').textContent = new Date().getFullYear();
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if(mql.matches){
+      for(const el of document.querySelectorAll('[class*="fade-"]')){
+        el.style.animation = 'none';
+        el.style.opacity = 1;
+        el.style.transform = 'none';
+      }
+    }
+  </script>
 </body>
 </html>
