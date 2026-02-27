@@ -23,7 +23,7 @@ def home():
     today = str(date.today())
     
 
-    return render_template('ap.html',today=today)
+    return render_template('index.html')
 
 @app.route('/submit',methods=['POST'])
 def submit():
